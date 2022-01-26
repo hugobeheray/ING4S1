@@ -1,0 +1,11 @@
+---
+- hosts: webapp_server
+  # Run commands as root
+  become: true
+  # Roles to be executed on these hosts
+  roles:
+    - role: project/install
+      tags: install
+
+    - role: project/healthchecks
+      tags: check

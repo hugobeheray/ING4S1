@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    redis: redis
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      redis: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        redis: redis
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          ports:
+            - containerPort: 6379
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: redisvolume
+      restartPolicy: Always
+      volumes:
+        - name: redisvolume
+          persistentVolumeClaim:
+            claimName: redisvolume
+status: {}
